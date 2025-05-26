@@ -1,2 +1,7 @@
 flask
 requests
+numpy
+scikit-fuzzy
+scipy
+networkx
+Matplotlib
