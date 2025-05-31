@@ -7,12 +7,12 @@ with open("paradajz.json", "r") as json_file:
     paradajzDict = json.load(json_file)
 
 varijable = {
-    "TemperaturaZraka":0,
-    "VlaznostZraka":0,
-    "BrzinaVjetra":0,
+    "TemperaturaZraka":20,
+    "VlaznostZraka":9,
+    "BrzinaVjetra":5,
     "AQI":0,
-    "DaLiPadaKisa":True,
-    "VrijemeDana":0,
+    "DaLiPadaKisa":False,
+    "VrijemeDana":13,
 }
 
 vektor = np.array(list(varijable.values()))
@@ -42,57 +42,72 @@ def paradajz_fuzzy(vektor):
         delta = uvjet["Domen"][2]
         lista_inputa.append(ctrl.Antecedent(np.arange(od,do,delta), uvjet["Varijabla"]))
 
+    
+
+    # Define output variable with more points
+    prozor = ctrl.Consequent(np.arange(0, 1.1, 0.5), 'prozor')
+
+    # Membership functions
+    for i in range(len(lista_inputa)):
+        lin_var = paradajzDict["uvjeti"][i]["Lingvisticki model varijable"]
+        for e in lin_var:
+            if e["ime"]=="noc":
+                noc_morning = fuzz.trapmf(lista_inputa[i].universe, e["domen"][0])
+                noc_evening = fuzz.trapmf(lista_inputa[i].universe, e["domen"][1])
+                lista_inputa[i][e["ime"]] = np.fmax(noc_morning, noc_evening)
+            elif len(e["domen"])==3:
+                lista_inputa[i][e["ime"]]= fuzz.trimf(lista_inputa[i].universe, e["domen"])
+            elif len(e["domen"])==4:
+                lista_inputa[i][e["ime"]]= fuzz.trapmf(lista_inputa[i].universe, e["domen"])
+    
+    prozor['zatvori'] = fuzz.trimf(prozor.universe, [0, 0, 0.5])
+    prozor['nista ne radi'] = fuzz.trimf(prozor.universe, [0.4, 0.5, 0.6])
+    prozor['otvori'] = fuzz.trimf(prozor.universe, [0.5, 1, 1])
+    
     temperatura = lista_inputa[0]
     vlaznost = lista_inputa[1]
     brzinaVjetra = lista_inputa[2]
     aqi = lista_inputa[3]
     daLiKisaPada = lista_inputa[4]
     vrijemeDana = lista_inputa[5]
+    # Rules
+    pravila = []
+    pravila.append(ctrl.Rule(vrijemeDana['noc'] & temperatura['taman-za-dan'], prozor["otvori"]))
+    pravila.append(ctrl.Rule(~vrijemeDana['noc'] & temperatura['taman-za-noc'], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(temperatura['prehladno'] | temperatura['hladno'],prozor["zatvori"]))
+    pravila.append(ctrl.Rule(temperatura['vruce'] | temperatura['prevruce'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(~vrijemeDana['noc'] & temperatura['taman-za-dan'], prozor['nista ne radi']))
+    pravila.append(ctrl.Rule(vlaznost['presuho'],prozor['otvori']))
+    pravila.append(ctrl.Rule(vlaznost['suho'], prozor['otvori']))
+    pravila.append(ctrl.Rule(vlaznost['prevlazno'] & ~daLiKisaPada["ne pada kisa"], prozor['otvori']))
+    pravila.append(ctrl.Rule(~brzinaVjetra["nema"] & ~brzinaVjetra["slab"], prozor['zatvori']))
+    pravila.append(ctrl.Rule(brzinaVjetra["slab"] & (vlaznost["suho"] | vlaznost["presuho"]), prozor['otvori']))
+    pravila.append(ctrl.Rule(~brzinaVjetra["nema"] & (~vlaznost["taman-za-dan"] | ~vlaznost["taman-za-noc"]), prozor['zatvori']))
+    pravila.append(ctrl.Rule(~aqi["dobro"] | ~aqi["umjereno"],prozor["zatvori"]))
 
-    # Define output variable with more points
-    prozor = ctrl.Consequent(np.arange(0, 1.1, 0.5), 'prozor')
+    # Control system
+    window_ctrl = ctrl.ControlSystem(pravila)
+    window_sim = ctrl.ControlSystemSimulation(window_ctrl)
 
-    # Membership functions
-    
+    # Set inputs
+
+    #window_sim.input['temperature'] = 60
+    #window_sim.input['humidity'] = 10
     i=0
-    for i in range(len(lista_inputa)):
-        lin_var = paradajzDict["uvjeti"][i]["Lingvisticki model varijable"]
-        #for j in range(len(lin_var)):
-        #    print(lin_var[j]["ime"])
-        
-        for e in lin_var:
-            if e["ime"]=="noc":
-                noc_morning = fuzz.trapmf(lista_inputa[i].universe, [0, 0, 4, 7])
-                noc_evening = fuzz.trapmf(lista_inputa[i].universe, [19, 21, 24, 24])
-                lista_inputa[i][e["ime"]] = np.fmax(noc_morning, noc_evening)
-            elif len(e["domen"])==3:
-                lista_inputa[i][e["ime"]]= fuzz.trimf(lista_inputa[i].universe, e["domen"])
-            elif len(e["domen"])==4:
-                lista_inputa[i][e["ime"]]= fuzz.trapmf(lista_inputa[i].universe, e["domen"])
-        
-            #fuzz.trapmf(var.universe, lin_var["Lingvisticki model varijable"][i]["domen"])
-        #lista_inputa[i][paradajzDict["uvjeti"]["Lingvisticki model varijable"][i]["ime"]]
-        
-    """for var in lista_inputa:
-        i=0
-        for lin_var in paradajzDict["uvjeti"]:
-            #print("\n",lin_var["Lingvisticki model varijable"][i]["ime"])
-            #print(lin_var["Lingvisticki model varijable"][i]["domen"])
-            #if(len(lin_var["Lingvisticki model varijable"][i]["domen"])==3):
-            #    var[lin_var["Lingvisticki model varijable"][i]["ime"]] = fuzz.trimf(var.universe, lin_var["Lingvisticki model varijable"][i]["domen"])
-            #else: #trapez
-            #    var[lin_var["Lingvisticki model varijable"][i]["ime"]] = fuzz.trapmf(var.universe, lin_var["Lingvisticki model varijable"][i]["domen"])
-            # Ako je noć
-            #if isinstance(lin_var["Lingvisticki model varijable"][i]["domen"][0], list):
-            
-            print(lin_var["Lingvisticki model varijable"][i]["ime"])
-            if lin_var["Lingvisticki model varijable"][i]["ime"]=="noc":
-                noc_morning = fuzz.trapmf(var.universe, [0, 0, 4, 7])
-                noc_evening = fuzz.trapmf(var.universe, [19, 21, 24, 24])
-                var['noc'] = np.fmax(noc_morning, noc_evening)
-            else:
-                var[lin_var["Lingvisticki model varijable"][i]["ime"]] = fuzz.trimf(var.universe, lin_var["Lingvisticki model varijable"][i]["domen"]) if len(lin_var["Lingvisticki model varijable"][i]["domen"]) == 3 else fuzz.trapmf(var.universe, lin_var["Lingvisticki model varijable"][i]["domen"])
-            i+=1"""
+    for e in paradajzDict["uvjeti"]:
+        window_sim.input[e["Varijabla"]] = vektor[i]
+        i+=1
+
+    # Compute
+    window_sim.compute()
+    val = window_sim.output['prozor']
+
+    #Views
+    for e in lista_inputa:
+        e.view()
+    print("Window state (0=closed, 1=open):", val)
+
+
     return val
 
 
