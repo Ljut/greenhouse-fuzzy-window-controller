@@ -1,0 +1,123 @@
+{
+    "vrsta_povrca":"paradajz",
+    "uvjeti":[
+        {
+            "Varijabla": "Temperatura zraka",
+            "Tip varijable": "kontinualna",
+            "Domen": [-40,80,1],
+            "Lingvisticki model varijable": [
+                {
+                    "prehladno":[-40,16,1]
+                },
+                {
+                    "hladno":[15,22,1]
+                },
+                {
+                    "taman-za-noc":[17,18,1]
+                },
+                {
+                    "taman-za-dan":[21,27,1]
+                },
+                {
+                    "vruce": [26,35,1]
+                },
+                {
+                    "prevruce": [34, 80,1]
+                }
+            ]
+        },
+        {
+            "Varijabla": "Vlaznost zraka",
+            "Tip varijable": "kontinualna",
+            "Domen": [0,100,1],
+            "Lingvisticki model varijable":[
+                {
+                    "presuho":[0,50,1]
+                },
+                {
+                    "suho":[45,83,1]
+                },
+                {
+                    "taman-za-noc":[65,75,1]
+                },
+                {
+                    "taman-za-dan":[80,90.1]
+                },
+                {
+                    "prevlazno":[89,100,1]
+                }
+            ]
+        },
+        {
+            "Varijabla":"Brzina vjetra",
+            "Tip varijable":"kontinualna",
+            "Domen":[0,32.4,0.1],
+            "Lingvisticki model varijable":[
+                {
+                    "nema":[0,1.4,0.1]
+                },
+                {
+                    "slab":[1.3,4,0.1]
+                },
+                {
+                    "umjeren":[3.5,6.7,0.1]
+                },
+                {
+                    "kritican":[4.5,8.9,0.1]
+                },
+                {
+                    "opasan":[6.4,8.9,0.1]
+                },
+                {
+                    "jako-opasan":[14.5,32.4,0.1]
+                }
+            ]
+        },
+        {
+            "Varijabla": "AQ indeks",
+            "Tip varijable": "kontinualna",
+            "Domen": [0, 600, 1],
+            "Lingvisticki model varijable": [
+                {
+                    "dobro": [0, 50, 1]
+                },
+                {
+                    "umjereno": [51, 100, 1]
+                },
+                {
+                    "blago nezdravo": [101, 150, 1]
+                },
+                {
+                    "nezdravo": [151, 200, 1]
+                },
+                {
+                    "pravo nezdravo": [201, 300, 1]
+                },
+                {
+                    "opasno": [301, 600, 1]
+                }
+            ]
+        },
+        {
+            "Varijabla": "Da li pada kiša",
+            "Tip varijable": "diskretna",
+            "Domen": [0, 1, 1],
+            "Lingvisticki model varijable": [
+                { "ne pada kiša": [0] },
+                { "pada kiša": [1] }
+            ]
+        },
+        {
+            "Varijabla": "Vrijeme dana",
+            "Tip varijable": "kontinualna",
+            "Domen": [0, 24, 0.5],
+            "Lingvisticki model varijable": [
+                { "noć": [[0, 7, 0.5], [19, 24, 0.5]] },
+                { "jutro": [6, 12, 0.5] },
+                { "podne": [11, 13, 0.5] },
+                { "poslijepodne": [12, 20, 0.5] }
+            ]
+        }
+    ]
+
+}
