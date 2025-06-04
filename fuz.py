@@ -72,7 +72,39 @@ def paradajz_fuzzy(vektor):
     vrijemeDana = lista_inputa[5]
     # Rules
     pravila = []
-    pravila.append(ctrl.Rule(vrijemeDana['noc'] & temperatura['taman-za-dan'], prozor["otvori"]))
+    pravila.append(ctrl.Rule())
+    pravila.append(ctrl.Rule(aqi['dobro'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"]) & temperatura['vruce'] & vlaznost["suho"] & ~daLiKisaPada["ne pada kisa"] & vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(~aqi["dobro"] & ~aqi["umjereno"],prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['taman-za-noc'] & vlaznost["suho"] & daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['vruce'] & vlaznost["taman-za-dan"] & daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['hladno'] & vlaznost["suho"] & ~daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['taman-za-dan'] & vlaznost["taman-za-dan"] & daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & brzinaVjetra["umjeren"] & temperatura['taman-za-dan'] & vlaznost["suho"] & ~daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['vruce'] & vlaznost["suho"] & ~daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['taman-za-noc'] & vlaznost["taman-za-dan"] & daLiKisaPada["ne pada kisa"] & vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & (brzinaVjetra["slab"] | brzinaVjetra["nema"])  & temperatura['taman-za-dan'] & vlaznost["taman-za-noc"] & daLiKisaPada["ne pada kisa"] & ~vrijemeDana['noc'],prozor["otvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & daLiKisaPada["pada kisa"] & brzinaVjetra["opasan"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & temperatura["prevruce"] & vrijemeDana["podne"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['opasno'], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(daLiKisaPada["pada kisa"] & brzinaVjetra["jako-opasan"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(temperatura["prehladno"] & vrijemeDana["noc"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(vlaznost["prevlazno"] & temperatura["hladno"] & vrijemeDana["jutro"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi["pravo nezdravo"] & daLiKisaPada["pada kisa"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(temperatura["prevruce"] & vrijemeDana["podne"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(brzinaVjetra["kritican"] & temperatura["hladno"] & vrijemeDana["noc"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi["blago nezdravo"] & vlaznost["prevlazno"] & vrijemeDana["poslijepodne"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(brzinaVjetra["opasan"] & daLiKisaPada["pada kisa"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi["nezdravo"] & temperatura["taman-za-dan"] & ~daLiKisaPada["ne pada kisa"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & temperatura["hladno"] & vlaznost["prevlazno"] & vrijemeDana["jutro"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & temperatura["prehladno"] & brzinaVjetra["slab"] & vrijemeDana["noc"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & temperatura["prevruce"] & vlaznost["prevlazno"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & vlaznost["prevlazno"] & vrijemeDana["noc"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & daLiKisaPada["pada kisa"] & temperatura["hladno"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & temperatura["prehladno"] & vlaznost["presuho"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['dobro'] & brzinaVjetra["jako-opasan"], prozor["zatvori"]))
+    pravila.append(ctrl.Rule(aqi['umjereno'] & temperatura["taman-za-dan"] & daLiKisaPada["pada kisa"] & vlaznost["prevlazno"], prozor["zatvori"]))
+
+    """pravila.append(ctrl.Rule(vrijemeDana['noc'] & temperatura['taman-za-dan'], prozor["otvori"]))
     pravila.append(ctrl.Rule(~vrijemeDana['noc'] & temperatura['taman-za-noc'], prozor["zatvori"]))
     pravila.append(ctrl.Rule(temperatura['prehladno'] | temperatura['hladno'],prozor["zatvori"]))
     pravila.append(ctrl.Rule(temperatura['vruce'] | temperatura['prevruce'],prozor["otvori"]))
@@ -83,8 +115,8 @@ def paradajz_fuzzy(vektor):
     pravila.append(ctrl.Rule(~brzinaVjetra["nema"] & ~brzinaVjetra["slab"], prozor['zatvori']))
     pravila.append(ctrl.Rule(brzinaVjetra["slab"] & (vlaznost["suho"] | vlaznost["presuho"]), prozor['otvori']))
     pravila.append(ctrl.Rule(~brzinaVjetra["nema"] & (~vlaznost["taman-za-dan"] | ~vlaznost["taman-za-noc"]), prozor['zatvori']))
-    pravila.append(ctrl.Rule(~aqi["dobro"] | ~aqi["umjereno"],prozor["zatvori"]))
-
+    pravila.append(ctrl.Rule(~aqi["dobro"] | ~aqi["umjereno"],prozor["zatvori"]))"""
+    
     # Control system
     window_ctrl = ctrl.ControlSystem(pravila)
     window_sim = ctrl.ControlSystemSimulation(window_ctrl)
