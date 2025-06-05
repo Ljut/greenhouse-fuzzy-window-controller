@@ -32,6 +32,7 @@ print(varijable)
 print(vektor)
 
 def paradajz_fuzzy(vektor):
+    print(vektor)
     val = 0
 
     # Define input variables
@@ -135,8 +136,8 @@ def paradajz_fuzzy(vektor):
     val = window_sim.output['prozor']
 
     #Views
-    for e in lista_inputa:
-        e.view()
+    #for e in lista_inputa:
+    #    e.view()
     print("Window state (0=closed, 1=open):", val)
 
 
