@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "author": "Zlatan Ljutika",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-breadboard", "id": "bb1", "top": -70.2, "left": -131.6, "attrs": {} },
+    {
+      "type": "board-pi-pico-w",
+      "id": "pico",
+      "top": -65.75,
+      "left": -58.45,
+      "rotate": 270,
+      "attrs": { "env": "micropython-20241129-v1.24.1" }
+    },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": -193.3, "left": -57.8, "attrs": {} },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -220.5,
+      "left": 157.8,
+      "attrs": { "temperature": "-30.5", "humidity": "11.5" }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": -317.8,
+      "left": -267,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -105.7,
+      "left": 13.1,
+      "rotate": 90,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text1",
+      "top": -134.4,
+      "left": 38.4,
+      "attrs": { "text": "Da li pada kiša" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text2",
+      "top": -201.6,
+      "left": 230.4,
+      "attrs": { "text": "Temperatura zraka" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text3",
+      "top": -153.6,
+      "left": 230.4,
+      "attrs": { "text": "Vlažnost zraka" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text4",
+      "top": -384,
+      "left": -240,
+      "attrs": { "text": "Motor za prozor" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text5",
+      "top": -230.4,
+      "left": -57.6,
+      "attrs": { "text": "Brzina vjetra" }
+    },
+    { "type": "wokwi-potentiometer", "id": "pot2", "top": -174.1, "left": 393.4, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 111.6,
+      "left": -5.4,
+      "attrs": { "color": "blue", "flip": "" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text6",
+      "top": 134.4,
+      "left": 28.8,
+      "attrs": { "text": "Ako pada kiša, lampica će biti upaljena" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text7",
+      "top": -249.6,
+      "left": 393.6,
+      "attrs": { "text": "Doba dana" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn2",
+      "top": 95.9,
+      "left": -82.9,
+      "rotate": 90,
+      "attrs": { "color": "red", "xray": "1" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text8",
+      "top": 153.6,
+      "left": -211.2,
+      "attrs": {
+        "text": "Radi štednje resursa, kada \npodesite vrijednosti za računanje,\npritisnite ovo dugme da bi se izvršilo \nfuzzy računanje"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text9",
+      "top": -278.4,
+      "left": -96,
+      "attrs": { "text": "Prozor je otvoren" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text10",
+      "top": -278.4,
+      "left": -384,
+      "attrs": { "text": "Prozor je zatvoren" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text11",
+      "top": -115.2,
+      "left": 355.2,
+      "attrs": { "text": "Noć" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text12",
+      "top": -211.2,
+      "left": 403.2,
+      "attrs": { "text": "Podne" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text13",
+      "top": -115.2,
+      "left": 480,
+      "attrs": { "text": "Noć" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text14",
+      "top": -163.2,
+      "left": -153.6,
+      "attrs": { "text": "Nema vjetra" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text15",
+      "top": -163.2,
+      "left": 28.8,
+      "attrs": { "text": "Jak vjetar" }
+    }
+  ],
+  "connections": [
+    [ "pico:GP0", "bb1:1b.h", "", [ "$bb" ] ],
+    [ "pico:GP1", "bb1:2b.h", "", [ "$bb" ] ],
+    [ "pico:GND.1", "bb1:3b.h", "", [ "$bb" ] ],
+    [ "pico:GP2", "bb1:4b.h", "", [ "$bb" ] ],
+    [ "pico:GP3", "bb1:5b.h", "", [ "$bb" ] ],
+    [ "pico:GP4", "bb1:6b.h", "", [ "$bb" ] ],
+    [ "pico:GP5", "bb1:7b.h", "", [ "$bb" ] ],
+    [ "pico:GND.2", "bb1:8b.h", "", [ "$bb" ] ],
+    [ "pico:GP6", "bb1:9b.h", "", [ "$bb" ] ],
+    [ "pico:GP7", "bb1:10b.h", "", [ "$bb" ] ],
+    [ "pico:GP8", "bb1:11b.h", "", [ "$bb" ] ],
+    [ "pico:GP9", "bb1:12b.h", "", [ "$bb" ] ],
+    [ "pico:GND.3", "bb1:13b.h", "", [ "$bb" ] ],
+    [ "pico:GP10", "bb1:14b.h", "", [ "$bb" ] ],
+    [ "pico:GP11", "bb1:15b.h", "", [ "$bb" ] ],
+    [ "pico:GP12", "bb1:16b.h", "", [ "$bb" ] ],
+    [ "pico:GP13", "bb1:17b.h", "", [ "$bb" ] ],
+    [ "pico:GND.4", "bb1:18b.h", "", [ "$bb" ] ],
+    [ "pico:GP14", "bb1:19b.h", "", [ "$bb" ] ],
+    [ "pico:GP15", "bb1:20b.h", "", [ "$bb" ] ],
+    [ "pico:GP16", "bb1:20t.c", "", [ "$bb" ] ],
+    [ "pico:GP17", "bb1:19t.c", "", [ "$bb" ] ],
+    [ "pico:GND.5", "bb1:18t.c", "", [ "$bb" ] ],
+    [ "pico:GP18", "bb1:17t.c", "", [ "$bb" ] ],
+    [ "pico:GP19", "bb1:16t.c", "", [ "$bb" ] ],
+    [ "pico:GP20", "bb1:15t.c", "", [ "$bb" ] ],
+    [ "pico:GP21", "bb1:14t.c", "", [ "$bb" ] ],
+    [ "pico:GND.6", "bb1:13t.c", "", [ "$bb" ] ],
+    [ "pico:GP22", "bb1:12t.c", "", [ "$bb" ] ],
+    [ "pico:RUN", "bb1:11t.c", "", [ "$bb" ] ],
+    [ "pico:GP26", "bb1:10t.c", "", [ "$bb" ] ],
+    [ "pico:GP27", "bb1:9t.c", "", [ "$bb" ] ],
+    [ "pico:GND.7", "bb1:8t.c", "", [ "$bb" ] ],
+    [ "pico:GP28", "bb1:7t.c", "", [ "$bb" ] ],
+    [ "pico:ADC_VREF", "bb1:6t.c", "", [ "$bb" ] ],
+    [ "pico:3V3", "bb1:5t.c", "", [ "$bb" ] ],
+    [ "pico:3V3_EN", "bb1:4t.c", "", [ "$bb" ] ],
+    [ "pico:GND.8", "bb1:3t.c", "", [ "$bb" ] ],
+    [ "pico:VSYS", "bb1:2t.c", "", [ "$bb" ] ],
+    [ "pico:VBUS", "bb1:1t.c", "", [ "$bb" ] ],
+    [ "pico:3V3", "bb1:tp.3", "green", [ "v0" ] ],
+    [ "pico:GND.8", "bb1:tn.1", "black", [ "v0" ] ],
+    [ "servo1:GND", "bb1:tn.2", "black", [ "v0" ] ],
+    [ "servo1:V+", "bb1:tp.1", "green", [ "v0" ] ],
+    [ "servo1:PWM", "bb1:1b.j", "green", [ "v0" ] ],
+    [ "pico:GP26", "pot1:SIG", "green", [ "v0" ] ],
+    [ "pot1:VCC", "bb1:tp.8", "red", [ "v0" ] ],
+    [ "pot1:GND", "bb1:tn.6", "black", [ "v0" ] ],
+    [ "dht1:VCC", "bb1:tp.21", "red", [ "v0" ] ],
+    [ "dht1:SDA", "bb1:19t.a", "green", [ "v0" ] ],
+    [ "dht1:GND", "bb1:tn.24", "black", [ "v0" ] ],
+    [ "btn1:2.r", "bb1:17t.a", "green", [ "v0" ] ],
+    [ "led1:A", "pico:GP10", "green", [ "v0" ] ],
+    [ "led1:C", "pico:GND.3", "green", [ "v0" ] ],
+    [ "pot2:SIG", "pico:GP27", "green", [ "v0" ] ],
+    [ "pot2:VCC", "bb1:tp.47", "red", [ "v0" ] ],
+    [ "pot2:GND", "bb1:tn.45", "black", [ "v0" ] ],
+    [ "btn1:1.r", "bb1:tn.15", "green", [ "v0" ] ],
+    [ "btn2:1.l", "bb1:8b.j", "", [ "$bb" ] ],
+    [ "btn2:2.l", "bb1:6b.j", "", [ "$bb" ] ],
+    [ "btn1:1.r", "bb1:tn.14", "", [ "$bb" ] ],
+    [ "btn1:2.r", "bb1:tn.12", "", [ "$bb" ] ]
+  ],
+  "dependencies": {}
+}
