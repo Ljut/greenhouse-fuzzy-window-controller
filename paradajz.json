@@ -35,7 +35,7 @@
         { "ime": "slab", "domen": [1.3, 2.7, 4] },
         { "ime": "umjeren", "domen": [3.5, 5.1, 6.7] },
         { "ime": "kritican", "domen": [4.5, 6.7, 8.9] },
-        { "ime": "opasan", "domen": [6.4, 7.7, 8.9] },
+        { "ime": "opasan", "domen": [6.4, 7.7, 15] },
         { "ime": "jako-opasan", "domen": [14.5, 23.5, 32.4, 32.4] }
       ]
     },
