@@ -1,18 +1,23 @@
 
 # A very simple Flask Hello World app for you to get started with...
+
 import requests
 from flask import Flask, request, jsonify
 import fuz
-
+print("ok")
 app = Flask(__name__)
 
-with open(".secret", "r") as secret:
+with open("/home/fuzzypico/mysite/.secret", "r") as secret:
     WAQI_TOKEN = secret.read()
 WAQI_URL_TEMPLATE = 'https://api.waqi.info/feed/{}/?token={}'
 
 @app.route('/')
 def hello_world():
-    return ' dajPoslic.pythonanywhere.com/AQI [POST] {"grad":"sarajevo"} | dajPoslic.pythonanywhere.com/paradajz_fuzzy [POST] {"grad":"sarajevo"} '
+    return ' fuzzypico.pythonanywhere.com/AQI [POST] {"grad":"sarajevo"} | fuzzypico.pythonanywhere.com/paradajz_fuzzy [POST] {"grad":"sarajevo"} '
+
+@app.route('/QT')
+def QuTe():
+    return "QuTe"
 
 @app.route('/AQI', methods=['POST'])
 def get_air_quality():
@@ -36,14 +41,17 @@ def get_air_quality():
 
 @app.route('/paradajz_fuzzy', methods=['POST'])
 def calc_fuzzy():
+    print("Form data:", request.form)
     vektor = []
-    vektor.append(int(request.form['TemperaturaZraka']))
-    vektor.append(int(request.form['VlaznostZraka']))
-    vektor.append(int(request.form['BrzinaVjetra']))
-    vektor.append(int(request.form['AQI']))
-    vektor.append(int(request.form['DaLiPadaKisa']))
-    vektor.append(int(request.form['VrijemeDana']))
-    return jsonify({"povrce":"paradajz","fuzzy": fuz.paradajz_fuzzy(vektor)})
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    try:
+        vektor.append(float(request.form['TemperaturaZraka']))
+        vektor.append(float(request.form['VlaznostZraka']))
+        vektor.append(float(request.form['BrzinaVjetra']))
+        vektor.append(int(request.form['AQI']))
+        vektor.append(int(request.form['DaLiPadaKisa']))
+        vektor.append(float(request.form['VrijemeDana']))
+    except Exception as e:
+        return jsonify({"ERROR":str(e)}), 500
+    val, zatvori, otvori, nista = fuz.paradajz_fuzzy(vektor)
+    #"povrce":"paradajz",
+    return jsonify({"fuzzy": val, "zatvori": zatvori, "otvori": otvori, "nista":nista})
