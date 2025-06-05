@@ -31,7 +31,7 @@
       "Tip varijable": "kontinualna",
       "Domen": [0, 32.4, 0.1],
       "Lingvisticki model varijable": [
-        { "ime": "nema", "domen": [0, 0.7, 1.4] },
+        { "ime": "nema", "domen": [0, 0, 0.7, 1.4] },
         { "ime": "slab", "domen": [1.3, 2.7, 4] },
         { "ime": "umjeren", "domen": [3.5, 5.1, 6.7] },
         { "ime": "kritican", "domen": [4.5, 6.7, 8.9] },
